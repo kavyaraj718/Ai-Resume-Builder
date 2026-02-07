@@ -17,3 +17,77 @@
         @apply outline-none focus:ring border border-gray-300 focus:ring-blue-500 focus:border-blue-500 rounded-lg resize-none;
     }
 }
+
+:root{
+        --anim-short: 400ms;
+        --anim-base: 700ms;
+        --anim-long: 1100ms;
+}
+
+/* Gentle entrance animations */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes floatY {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes pop {
+    0% { transform: scale(.96); opacity: .0 }
+    60% { transform: scale(1.02); opacity: 1 }
+    100% { transform: scale(1); }
+}
+
+/* Attach animations to common selectors so elements come alive without changing markup */
+nav, .shadow { animation: fadeInDown var(--anim-base) ease both; }
+
+@keyframes fadeInDown {
+ from { opacity: 0; transform: translateY(-10px); }
+ to { opacity: 1; transform: translateY(0); }
+}
+
+/* Hero entrance */
+.min-h-screen h1 { animation: fadeInUp var(--anim-base) cubic-bezier(.2,.9,.3,1) both; }
+.min-h-screen p, .min-h-screen .flex.items-center.gap-4, .min-h-screen #logo-container { animation: fadeInUp var(--anim-long) cubic-bezier(.2,.9,.3,1) both; }
+
+/* CTA pop */
+.min-h-screen a.bg-green-500, .min-h-screen button.border { animation: pop var(--anim-short) ease both; }
+.min-h-screen a.bg-green-500:hover { transform: translateY(-3px) scale(1.02); }
+
+/* Avatar float and stagger */
+.min-h-screen .-space-x-3 img { animation: floatY 3.5s ease-in-out infinite; transform-origin: center; }
+.min-h-screen .-space-x-3 img:nth-child(1){ animation-delay: 0.05s; }
+.min-h-screen .-space-x-3 img:nth-child(2){ animation-delay: 0.25s; }
+.min-h-screen .-space-x-3 img:nth-child(3){ animation-delay: 0.15s; }
+.min-h-screen .-space-x-3 img:nth-child(4){ animation-delay: 0.35s; }
+.min-h-screen .-space-x-3 img:nth-child(5){ animation-delay: 0.45s; }
+
+/* Logo fade-in stagger */
+#logo-container svg { opacity: 0; transform: translateY(6px); animation: fadeInUp var(--anim-base) ease both; }
+#logo-container svg:nth-child(1){ animation-delay: .05s }
+#logo-container svg:nth-child(2){ animation-delay: .12s }
+#logo-container svg:nth-child(3){ animation-delay: .2s }
+#logo-container svg:nth-child(4){ animation-delay: .28s }
+#logo-container svg:nth-child(5){ animation-delay: .36s }
+#logo-container svg:nth-child(6){ animation-delay: .44s }
+
+/* subtle card/section reveal for lists and forms */
+.fade-reveal { opacity:0; transform: translateY(8px); animation: fadeInUp var(--anim-base) ease both; }
+.fade-reveal.slow { animation-duration: var(--anim-long); }
+
+/* Buttons focus ring + subtle motion */
+button:active, a:active{ transition: transform .12s ease; }
+
+/* Accessibility: prefers-reduced-motion respect */
+@media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+}
